@@ -62,7 +62,7 @@ def convert_value_shorthand(value:str) -> float:
             converted = float(value.upper().strip(shorthand))
             converted *= SHORTHAND_MULTIPIERS[shorthand]
             return converted
-    if value.isnumeric():
+    if value.replace(".", "", 1).isdigit():
         return float(value)
     else:
         error(f"{value} is not a valid resistor value! Only use numbers with optional shorthands for multiples (K and M).")
@@ -101,7 +101,7 @@ def get_arguments() -> tuple:
 
 # generates and returns a list of r2 values 
 # using a variant of the voltage divider formula
-def generate_r2_list(vin:float, vout:float, r1_list) -> list:
+def generate_r2_list(vin:float, vout:float, r1_list:list) -> list:
     r2_list = []
     if vin == vout:
         error("Vin and Vout cannot be equal! Try making Vout lower than Vin.")
